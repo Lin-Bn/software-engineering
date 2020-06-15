@@ -11,6 +11,7 @@ package entity;
  */
 public class customer {
 
+    public final String customerNo;
     private final String customerName;
     private final String customerID;
     private final String gender;
@@ -19,7 +20,8 @@ public class customer {
     private final int tenancy;
     private final String roomNo;
 
-    public customer(String customerName, String customerID, String gender, String roomType, String startDate, int tenancy, String roomNo) {
+    public customer(String customerNo, String customerName, String customerID, String gender, String roomType, String startDate, int tenancy, String roomNo) {
+        this.customerNo = customerNo;
         this.customerName = customerName;
         this.customerID = customerID;
         this.gender = gender;
@@ -27,6 +29,10 @@ public class customer {
         this.startDate = startDate;
         this.tenancy = tenancy;
         this.roomNo = roomNo;
+    }
+
+    public String getCustomerNo() {
+        return customerNo;
     }
 
     public String getCustomerName() {
@@ -59,7 +65,10 @@ public class customer {
 
     @Override
     public String toString() {
-        return "customer{" + "customerName=" + customerName + ", customerID=" + customerID + ", gender=" + gender + ", roomType=" + roomType + ", startDate=" + startDate + ", tenancy=" + tenancy + ", roomNo=" + roomNo + '}';
+        return "customer{" + "customerNo=" + customerNo + ", customerName=" + customerName + ", customerID=" + customerID + ", gender=" + gender + ", roomType=" + roomType + ", startDate=" + startDate + ", tenancy=" + tenancy + ", roomNo=" + roomNo + '}';
     }
 
+   
+
+   
 }
