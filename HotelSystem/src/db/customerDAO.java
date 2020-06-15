@@ -75,19 +75,15 @@ public class customerDAO {
     public boolean updateCustomer(customer c) {
         try {
             Connection conn = DBHelper.getConnection();
-            String sql = "update customer set customerName=?,customerId=?,gender=?,telephoneNo=?,roomType=?,startDate=?,tenancy=?,roomNo=?,discount=?,deposit=? where customerNo=?";
+            String sql = "update customer set customerName=?,customerId=?,gender=?,tenancy=?,discount=?,deposit=? where telephoneNo=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getCustomerName());
             ps.setString(2, c.getCustomerID());
             ps.setString(3, c.getGender());
-            ps.setString(4, c.getTelephoneNo());
-            ps.setString(5, c.getRoomType());
-            ps.setString(6, c.getStartDate());
-            ps.setInt(7, c.getTenancy());
-            ps.setString(8, c.getRoomNo());
-            ps.setFloat(9, c.getDiscount());
-            ps.setInt(10, c.getDeposit());
-            ps.setInt(11, c.getCustomerNo());
+            ps.setInt(4, c.getTenancy());
+            ps.setFloat(5, c.getDiscount());
+            ps.setInt(6, c.getDeposit());
+            ps.setString(7, c.getTelephoneNo());
             ps.executeUpdate();
             ps.close();
 
@@ -111,4 +107,73 @@ public class customerDAO {
         return true;
     }
 
+    public String getRoomNo(String tel) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        customer c = null;
+        String r = null;
+        try {
+            conn = DBHelper.getConnection();
+            String sql = "select roomNo from customer where telephoneNo=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, tel);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                r = rs.getString("roomNo");
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return r;
+    }
+
+    public String getRoomType(String tel) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        customer c = null;
+        String r = null;
+        try {
+            conn = DBHelper.getConnection();
+            String sql = "select roomType from customer where telephoneNo=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, tel);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                r = rs.getString("roomType");
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return r;
+    }
+
+    public String getRoomPrice(String roomNo) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        customer c = null;
+        String r=null;
+        try {
+            conn = DBHelper.getConnection();
+            String sql = "select roomPrice from room where roomNo=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, roomNo);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+              r=rs.getString("roomPrice");
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return r;
+    }
 }
