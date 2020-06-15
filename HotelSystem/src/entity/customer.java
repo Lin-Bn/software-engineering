@@ -11,27 +11,23 @@ package entity;
  */
 public class customer {
 
-    public final String customerNo;
-    private final String customerName;
-    private final String customerID;
-    private final String gender;
-    private final String roomType;
-    private final String startDate;
-    private final int tenancy;
-    private final String roomNo;
+    private int customerNo;
+    private String customerName;
+    private String customerID;
+    private String gender;
+    private String telephoneNo;
+    private String roomType;
+    private String startDate;
+    private int tenancy;
+    private String roomNo;
+    private float discount;
+    private int deposit;
 
-    public customer(String customerNo, String customerName, String customerID, String gender, String roomType, String startDate, int tenancy, String roomNo) {
-        this.customerNo = customerNo;
-        this.customerName = customerName;
-        this.customerID = customerID;
-        this.gender = gender;
-        this.roomType = roomType;
-        this.startDate = startDate;
-        this.tenancy = tenancy;
-        this.roomNo = roomNo;
+    public customer() {
+
     }
 
-    public String getCustomerNo() {
+    public int getCustomerNo() {
         return customerNo;
     }
 
@@ -63,12 +59,65 @@ public class customer {
         return roomNo;
     }
 
-    @Override
-    public String toString() {
-        return "customer{" + "customerNo=" + customerNo + ", customerName=" + customerName + ", customerID=" + customerID + ", gender=" + gender + ", roomType=" + roomType + ", startDate=" + startDate + ", tenancy=" + tenancy + ", roomNo=" + roomNo + '}';
+    public String getTelephoneNo() {
+        return telephoneNo;
     }
 
-   
+    public float getDiscount() {
+        return discount;
+    }
 
-   
+    public int getDeposit() {
+        return deposit;
+    }
+
+    public void setCustomerNo(int customerNo) {
+        this.customerNo = customerNo;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setTenancy(int tenancy) {
+        this.tenancy = tenancy;
+    }
+
+    public void setRoomNo(String roomNo) {
+        this.roomNo = roomNo;
+    }
+
+    public void setTelephoneNo(String telephoneNo) {
+        this.telephoneNo = telephoneNo;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
+
+    public void setDeposit(int deposit) {
+        this.deposit = deposit;
+    }
+
+    @Override
+    public String toString() {
+        return "customer{" + "customerNo=" + customerNo + ", customerName=" + customerName + ", customerID=" + customerID + ", gender=" + gender + ", telephoneNo=" + telephoneNo + ", roomType=" + roomType + ", startDate=" + startDate + ", tenancy=" + tenancy + ", roomNo=" + roomNo + ", discount=" + discount + ", deposit=" + deposit + '}';
+    }
+
 }

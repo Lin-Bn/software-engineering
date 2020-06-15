@@ -16,29 +16,40 @@ import java.sql.SQLException;
  */
 public class DBHelper {
 
-    public static final String url = "jdbc:mysql://localhost:3306/hotelsystem?useUnicode=true&amp;characterEncoding=utf8?useUnicode=true&amp;characterEncoding=utf8";
-    public static final String name = "com.mysql.jdbc.Driver";
-    public static final String user = "root";
-    public static final String password = "123456";
+    private static final String driver = "org.gjt.mm.mysql.Driver";
+    private static final String url = "jdbc:mysql://localhost:3306/hotelsystem?useUnicode=true&characterEncoding=UTF-8";
+    private static final String username = "root";
+    private static final String password = "123456";
 
-    public Connection conn = null;
-    public PreparedStatement pst = null;
+    private static Connection connection = null;
+    //静态代码块，负责加载驱动
 
-    public DBHelper(String sql) {
+    static {
         try {
-            Class.forName(name);//指定连接类型  
-            conn = DriverManager.getConnection(url, user, password);//获取连接  
-            pst = conn.prepareStatement(sql);//准备执行语句  
+            Class.forName(driver);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    //单例模式，返回数据库连接对象
 
-    public void close() {
+    public static Connection getConnection() throws Exception {
+        if (connection == null) {
+            connection = DriverManager.getConnection(url, username, password);
+            //return connection;
+        }
+        return connection;
+    }
+
+    public static void main(String[] args) {
         try {
-            this.conn.close();
-            this.pst.close();
-        } catch (SQLException e) {
+            Connection connection = DBHelper.getConnection();
+            if (connection != null) {
+                System.out.println("数据库连接成功");
+            } else {
+                System.out.println("数据库连接失败");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

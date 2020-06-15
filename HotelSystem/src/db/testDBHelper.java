@@ -5,6 +5,9 @@
  */
 package db;
 
+import entity.customer;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,31 +17,118 @@ import java.sql.SQLException;
  */
 public class testDBHelper {
 
-    static String sql = null;
-    static DBHelper db1 = null;
-    static ResultSet ret = null;
+    public static customer testQuery() {
 
-    public static void main(String[] args) {
-        sql = "select * from customer";//SQL语句  
-        db1 = new DBHelper(sql);//创建DBHelper对象
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        customer c = null;
 
         try {
-            ret = db1.pst.executeQuery();//执行语句，得到结果集  
-            while (ret.next()) {
-                String customerNo = ret.getString(1);
-                String customerName = ret.getString(2);
-                String customerID = ret.getString(3);
-                String gender = ret.getString(4);
-                String roomType = ret.getString(5);
-                String startDate = ret.getString(6);
-                String tenancy = ret.getString(7);
-                String roomNo = ret.getString(8);
-                System.out.println(customerNo + "\t" + customerName + "\t" + customerID + "\t" + gender + "\t" + roomType + "\t" + startDate + "\t" + tenancy + "\t" + roomNo);
-            }//显示数据  
-            ret.close();
-            db1.close();//关闭连接  
-        } catch (SQLException e) {
-            e.printStackTrace();
+            conn = DBHelper.getConnection();
+            String sql = "select * from customer";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                c = new customer();
+                c.setCustomerNo(rs.getInt("customerNo"));
+                c.setCustomerName(rs.getString("customerName"));
+                c.setCustomerID(rs.getString("customerID"));
+                c.setGender(rs.getString("gender"));
+                c.setRoomType(rs.getString("roomType"));
+                c.setStartDate(rs.getString("startDate"));
+                c.setTenancy(rs.getInt("tenancy"));
+                c.setRoomNo(rs.getString("roomNo"));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        return c;
+    }
+
+    public static boolean testUpdate(customer c) {
+        try {
+            Connection conn = DBHelper.getConnection();
+            String sql = "insert into customer(customerName,customerID,gender,roomType,startDate,tenancy,roomNo)" + " values (?,?,?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, c.getCustomerName());
+            ps.setString(2, c.getCustomerID());
+            ps.setString(3, c.getGender());
+            ps.setString(4, c.getRoomType());
+            ps.setString(5, c.getStartDate());
+            ps.setInt(6, c.getTenancy());
+            ps.setString(7, c.getRoomNo());
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public static void main(String[] args) {
+        /*
+        customer c = new customer();
+        c = testQuery();
+        System.out.println(c.getCustomerNo());
+        System.out.println(c.getCustomerName());
+        System.out.println(c.getCustomerID());
+        System.out.println(c.getGender());
+        System.out.println(c.getRoomType());
+        System.out.println(c.getStartDate());
+        System.out.println(c.getTenancy());
+        System.out.println(c.getRoomNo());
+        
+        
+        customer c1 = new customer();
+        c1.setCustomerID("371223200209134627");
+        c1.setCustomerName("李四");
+        c1.setGender("男");
+        c1.setRoomType("双人间");
+        c1.setStartDate("2019.6.19");
+        c1.setTenancy(7);
+        c1.setRoomNo("26");
+        if (testUpdate(c1)) {
+            System.out.println("update success!");
+        } else {
+            System.out.println("update fail!");
+        }
+        
+        customer c = new customer();
+        customerDAO cdao=new customerDAO();
+        c=cdao.query("370213200005184396");
+        System.out.println(c.getCustomerNo());
+        System.out.println(c.getCustomerName());
+        System.out.println(c.getCustomerID());
+        System.out.println(c.getGender());
+        System.out.println(c.getTelephoneNo());
+        System.out.println(c.getRoomType());
+        System.out.println(c.getStartDate());
+        System.out.println(c.getTenancy());
+        System.out.println(c.getRoomNo());
+        System.out.println(c.getDiscount());
+        System.out.println(c.getDeposit());
+        
+        customer c = new customer();
+        customerDAO cdao=new customerDAO();
+        cdao.deleteCustomer(3);
+        */
+        customer c1 = new customer();
+        customerDAO cdao=new customerDAO();
+        c1.setCustomerNo(2);
+        c1.setCustomerID("371223200209134627");
+        c1.setCustomerName("李五");
+        c1.setGender("男");
+        c1.setRoomType("双人间");
+        c1.setStartDate("2019.6.19");
+        c1.setTenancy(7);
+        c1.setRoomNo("26");
+        c1.setTelephoneNo("13156455");
+        c1.setDiscount(1);
+        c1.setDeposit(400);
+        cdao.updateCustomer(c1);
     }
 }
