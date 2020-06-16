@@ -19,6 +19,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="&#x5bbe;&#x9986;&#x7ba1;&#x7406;&#x7cfb;&#x7edf;"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -66,9 +67,21 @@
         <Component class="javax.swing.JButton" name="jButtonCustomer">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x987e;&#x5ba2;&#x5165;&#x4f4f;&#x624b;&#x7eed;&#x529e;&#x7406;"/>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCustomerActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonCustomerManagement">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x987e;&#x5ba2;&#x4fe1;&#x606f;&#x7ba1;&#x7406;"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCustomerManagementActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

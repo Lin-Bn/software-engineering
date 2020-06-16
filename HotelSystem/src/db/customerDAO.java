@@ -9,6 +9,7 @@ import entity.customer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -159,7 +160,7 @@ public class customerDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         customer c = null;
-        String r=null;
+        String r = null;
         try {
             conn = DBHelper.getConnection();
             String sql = "select roomPrice from room where roomNo=?";
@@ -167,7 +168,7 @@ public class customerDAO {
             pstmt.setString(1, roomNo);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-              r=rs.getString("roomPrice");
+                r = rs.getString("roomPrice");
             }
             rs.close();
             pstmt.close();

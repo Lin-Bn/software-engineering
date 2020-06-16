@@ -33,11 +33,13 @@ public class Main extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButtonCustomer = new javax.swing.JButton();
+        jButtonCustomerManagement = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("宾馆管理系统");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -47,12 +49,24 @@ public class Main extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         jButtonCustomer.setText("顾客入住手续办理");
+        jButtonCustomer.setFocusable(false);
         jButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCustomerActionPerformed(evt);
             }
         });
         jToolBar1.add(jButtonCustomer);
+
+        jButtonCustomerManagement.setText("顾客信息管理");
+        jButtonCustomerManagement.setFocusable(false);
+        jButtonCustomerManagement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonCustomerManagement.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonCustomerManagement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCustomerManagementActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonCustomerManagement);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -88,6 +102,12 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         exit();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButtonCustomerManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCustomerManagementActionPerformed
+        // TODO add your handling code here:
+        customerManagement c = new customerManagement(this, true);
+        c.setVisible(true);
+    }//GEN-LAST:event_jButtonCustomerManagementActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,6 +153,7 @@ public class Main extends javax.swing.JFrame {
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCustomer;
+    private javax.swing.JButton jButtonCustomerManagement;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
