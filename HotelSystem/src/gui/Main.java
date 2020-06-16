@@ -6,6 +6,7 @@
 package gui;
 
 import java.awt.HeadlessException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,7 +34,7 @@ public class Main extends javax.swing.JFrame {
 
         jToolBar1 = new javax.swing.JToolBar();
         jButtonCustomer = new javax.swing.JButton();
-        jButtonCustomerManagement = new javax.swing.JButton();
+        jButtonAdministrator = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -57,16 +58,16 @@ public class Main extends javax.swing.JFrame {
         });
         jToolBar1.add(jButtonCustomer);
 
-        jButtonCustomerManagement.setText("顾客信息管理");
-        jButtonCustomerManagement.setFocusable(false);
-        jButtonCustomerManagement.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonCustomerManagement.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonCustomerManagement.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAdministrator.setText("管理员系统");
+        jButtonAdministrator.setFocusable(false);
+        jButtonAdministrator.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonAdministrator.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonAdministrator.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCustomerManagementActionPerformed(evt);
+                jButtonAdministratorActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonCustomerManagement);
+        jToolBar1.add(jButtonAdministrator);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -94,7 +95,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jButtonCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCustomerActionPerformed
         // TODO add your handling code here:
-        customerCheckIn c = new customerCheckIn(this, true);
+        CustomerCheckIn c = new CustomerCheckIn(this, true);
         c.setVisible(true);
     }//GEN-LAST:event_jButtonCustomerActionPerformed
 
@@ -103,11 +104,11 @@ public class Main extends javax.swing.JFrame {
         exit();
     }//GEN-LAST:event_formWindowClosing
 
-    private void jButtonCustomerManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCustomerManagementActionPerformed
+    private void jButtonAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdministratorActionPerformed
         // TODO add your handling code here:
-        customerManagement c = new customerManagement(this, true);
+        AdministerSystem c = new AdministerSystem(this, true);
         c.setVisible(true);
-    }//GEN-LAST:event_jButtonCustomerManagementActionPerformed
+    }//GEN-LAST:event_jButtonAdministratorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,15 +146,15 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void exit() throws HeadlessException {
-        int opt = JOptionPane.showConfirmDialog(this, "确认退出宾馆管理系统？");
+        int opt = JOptionPane.showConfirmDialog(this, "确认退出宾馆管理系统？","确认",JOptionPane.YES_NO_OPTION);
         if (opt == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdministrator;
     private javax.swing.JButton jButtonCustomer;
-    private javax.swing.JButton jButtonCustomerManagement;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

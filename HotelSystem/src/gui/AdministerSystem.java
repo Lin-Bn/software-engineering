@@ -21,12 +21,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mints
  */
-public class customerManagement extends javax.swing.JDialog {
+public class AdministerSystem extends javax.swing.JDialog {
 
     /**
      * Creates new form customerManagement
      */
-    public customerManagement(java.awt.Frame parent, boolean modal) {
+    public AdministerSystem(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
@@ -53,7 +53,7 @@ public class customerManagement extends javax.swing.JDialog {
         jButtonUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("顾客信息管理");
+        setTitle("管理员系统");
 
         jTableCustomerInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -173,10 +173,14 @@ public class customerManagement extends javax.swing.JDialog {
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
         // TODO add your handling code here:
         int no = jTableCustomerInfo.getSelectedRow();
+        if (no == -1) {
+            JOptionPane.showMessageDialog(this, "请先选择一条记录！");
+            return;
+        }
         String customerID = (String) jTableCustomerInfo.getValueAt(no, 2);
         int customerNo = (int) jTableCustomerInfo.getValueAt(no, 0);
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        customerUpdate cup = new customerUpdate(frame, true);
+        CustomerUpdate cup = new CustomerUpdate(frame, true);
         cup.setCustomerID(customerID);
         cup.setCustomerNo(customerNo);
         cup.setLocationRelativeTo(null);
@@ -267,20 +271,23 @@ public class customerManagement extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(customerManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministerSystem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(customerManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministerSystem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(customerManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministerSystem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(customerManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministerSystem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                customerManagement dialog = new customerManagement(new javax.swing.JFrame(), true);
+                AdministerSystem dialog = new AdministerSystem(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

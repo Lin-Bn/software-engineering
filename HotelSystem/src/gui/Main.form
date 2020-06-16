@@ -73,15 +73,15 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCustomerActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonCustomerManagement">
+        <Component class="javax.swing.JButton" name="jButtonAdministrator">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x987e;&#x5ba2;&#x4fe1;&#x606f;&#x7ba1;&#x7406;"/>
+            <Property name="text" type="java.lang.String" value="&#x7ba1;&#x7406;&#x5458;&#x7cfb;&#x7edf;"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCustomerManagementActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAdministratorActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
