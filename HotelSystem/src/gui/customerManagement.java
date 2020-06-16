@@ -173,10 +173,12 @@ public class customerManagement extends javax.swing.JDialog {
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
         // TODO add your handling code here:
         int no = jTableCustomerInfo.getSelectedRow();
-        String customerID= (String) jTableCustomerInfo.getValueAt(no, 2);
+        String customerID = (String) jTableCustomerInfo.getValueAt(no, 2);
+        int customerNo = (int) jTableCustomerInfo.getValueAt(no, 0);
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         customerUpdate cup = new customerUpdate(frame, true);
         cup.setCustomerID(customerID);
+        cup.setCustomerNo(customerNo);
         cup.setLocationRelativeTo(null);
         cup.setVisible(true);
 

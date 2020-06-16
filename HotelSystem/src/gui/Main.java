@@ -19,7 +19,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-         setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -144,13 +144,13 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
-     private void exit() throws HeadlessException {
+    private void exit() throws HeadlessException {
         int opt = JOptionPane.showConfirmDialog(this, "确认退出宾馆管理系统？");
         if (opt == JOptionPane.YES_OPTION) {
-             System.exit(0);
+            System.exit(0);
         }
     }
-     
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCustomer;
     private javax.swing.JButton jButtonCustomerManagement;

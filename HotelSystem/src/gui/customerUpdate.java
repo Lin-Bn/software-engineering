@@ -7,6 +7,7 @@ package gui;
 
 import db.customerDAO;
 import entity.customer;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,14 +25,16 @@ public class customerUpdate extends javax.swing.JDialog {
     }
 
     private String customerID;
+    private int customerNo;
 
-    
-    
     public void setCustomerID(String customerID) {
         this.customerID = customerID;
     }
-    
-    
+
+    public void setCustomerNo(int customerNo) {
+        this.customerNo = customerNo;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +66,7 @@ public class customerUpdate extends javax.swing.JDialog {
         jTextFieldDeposit = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        jButtonUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("顾客信息修改");
@@ -99,7 +102,12 @@ public class customerUpdate extends javax.swing.JDialog {
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("女");
 
-        jButton1.setText("确认修改");
+        jButtonUpdate.setText("确认修改");
+        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,7 +153,7 @@ public class customerUpdate extends javax.swing.JDialog {
                                         .addComponent(jRadioButton1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jRadioButton2))))
-                            .addComponent(jButton1))))
+                            .addComponent(jButtonUpdate))))
                 .addContainerGap(106, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -193,7 +201,7 @@ public class customerUpdate extends javax.swing.JDialog {
                     .addComponent(jTextFieldDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jButtonUpdate)
                 .addGap(33, 33, 33))
         );
 
@@ -202,27 +210,68 @@ public class customerUpdate extends javax.swing.JDialog {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        customer c=new customer();
-        customerDAO cdao=new customerDAO();
-        c=cdao.query(customerID);
+        customer c = new customer();
+        customerDAO cdao = new customerDAO();
+        c = cdao.query(customerID);
         jTextFieldName.setText(c.getCustomerName());
         jTextFieldCustomerID.setText(c.getCustomerID());
-        String g=c.getGender();
-        if(g.equals("男")){
+        String g = c.getGender();
+        if (g.equals("男")) {
             jRadioButton1.setSelected(true);
-        }
-        else{
+        } else {
             jRadioButton2.setSelected(true);
         }
-            
+
         jTextFieldTele.setText(c.getTelephoneNo());
         jTextFieldRoomType.setText(c.getRoomType());
         jTextFieldRoomNo.setText(c.getRoomNo());
         jTextFieldStart.setText(c.getStartDate());
-        jTextFieldTenancy.setText(String.valueOf(c.getTenancy()) );
+        jTextFieldTenancy.setText(String.valueOf(c.getTenancy()));
         jTextFieldDiscount.setText(String.valueOf(c.getDiscount()));
         jTextFieldDeposit.setText(String.valueOf(c.getDeposit()));
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
+        // TODO add your handling code here:
+        ex();
+    }//GEN-LAST:event_jButtonUpdateActionPerformed
+
+    private void ex() {
+        int opt = JOptionPane.showConfirmDialog(this, "确认修改当前顾客信息？");
+        if (opt == JOptionPane.YES_OPTION) {
+            String customerName = jTextFieldName.getText();
+            String customerID = jTextFieldCustomerID.getText();
+            String tele = jTextFieldTele.getText();
+            String roomType = jTextFieldRoomType.getText();
+            String roomNo = jTextFieldRoomNo.getText();
+            String start = jTextFieldStart.getText();
+            int tenancy = Integer.parseInt(jTextFieldTenancy.getText());
+            float discount = Float.parseFloat(jTextFieldDiscount.getText());
+            int deposit = Integer.parseInt(jTextFieldDeposit.getText());
+
+            String gender = null;
+            if (jRadioButton1.isSelected()) {
+                gender = "男";
+            } else if (jRadioButton2.isSelected()) {
+                gender = "女";
+            }
+            customer c = new customer();
+            c.setCustomerNo(customerNo);
+            c.setCustomerName(customerName);
+            c.setCustomerID(customerID);
+            c.setGender(gender);
+            c.setTelephoneNo(tele);
+            c.setRoomNo(roomNo);
+            c.setRoomType(roomType);
+            c.setStartDate(start);
+            c.setTenancy(tenancy);
+            c.setDiscount(discount);
+            c.setDeposit(deposit);
+            customerDAO cdao = new customerDAO();
+            cdao.updateCustomerAll(c);
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -265,14 +314,13 @@ public class customerUpdate extends javax.swing.JDialog {
             }
         });
     }
-    
-    public void fill()
-    {
-        
+
+    public void fill() {
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

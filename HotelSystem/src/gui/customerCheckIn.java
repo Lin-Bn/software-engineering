@@ -260,7 +260,7 @@ public class customerCheckIn extends javax.swing.JDialog {
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
         // TODO add your handling code here:
-           ex();
+        ex();
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     private void JTextFieldDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextFieldDiscountActionPerformed
@@ -296,14 +296,13 @@ public class customerCheckIn extends javax.swing.JDialog {
     private void exit() throws HeadlessException {
         int opt = JOptionPane.showConfirmDialog(this, "确认关闭当前窗口？");
         if (opt == JOptionPane.YES_OPTION) {
-             System.exit(0);
+            System.exit(0);
         }
     }
 
     private void ex() {
         int opt = JOptionPane.showConfirmDialog(this, "确认提交当前顾客信息？");
         if (opt == JOptionPane.YES_OPTION) {
-            System.out.println("button activited!");
             String customerName = JTextFieldCustomerName.getText();
             String customerID = JTextFieldCustomerID.getText();
             String gender = null;
@@ -327,7 +326,7 @@ public class customerCheckIn extends javax.swing.JDialog {
             customerDAO cdao = new customerDAO();
             cdao.updateCustomer(c);
         }
-        
+
     }
 
     /**

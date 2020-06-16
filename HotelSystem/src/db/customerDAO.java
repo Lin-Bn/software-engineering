@@ -94,6 +94,30 @@ public class customerDAO {
         return true;
     }
 
+    public boolean updateCustomerAll(customer c) {
+        try {
+            Connection conn = DBHelper.getConnection();
+            String sql = "update customer set customerName=?,customerId=?,gender=?,telephoneNo=?,roomType=?,startDate=?,tenancy=?,discount=?,deposit=? where customerNo=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, c.getCustomerName());
+            ps.setString(2, c.getCustomerID());
+            ps.setString(3, c.getGender());
+            ps.setString(4, c.getTelephoneNo());
+            ps.setString(5, c.getRoomType());
+            ps.setString(6, c.getStartDate());
+            ps.setInt(7, c.getTenancy());
+            ps.setFloat(8, c.getDiscount());
+            ps.setInt(9, c.getDeposit());
+            ps.setInt(10, c.getCustomerNo());
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
     public boolean deleteCustomer(int customerNo) {
         try {
             Connection conn = DBHelper.getConnection();
