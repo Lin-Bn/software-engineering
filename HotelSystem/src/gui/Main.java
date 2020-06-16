@@ -39,7 +39,7 @@ public class Main extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("宾馆管理系统");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -146,7 +146,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void exit() throws HeadlessException {
-        int opt = JOptionPane.showConfirmDialog(this, "确认退出宾馆管理系统？","确认",JOptionPane.YES_NO_OPTION);
+        int opt = JOptionPane.showConfirmDialog(this, "确认退出宾馆管理系统？", "确认", JOptionPane.YES_NO_OPTION);
         if (opt == JOptionPane.YES_OPTION) {
             System.exit(0);
         }

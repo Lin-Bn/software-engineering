@@ -18,7 +18,7 @@
     </Menu>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="title" type="java.lang.String" value="&#x5bbe;&#x9986;&#x7ba1;&#x7406;&#x7cfb;&#x7edf;"/>
   </Properties>
   <SyntheticProperties>
