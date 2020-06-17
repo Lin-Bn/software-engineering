@@ -148,7 +148,7 @@ public class AdministerSystem extends javax.swing.JDialog {
                 .addContainerGap(68, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("顾客信息查询与删除", jPanel1);
+        jTabbedPane1.addTab("顾客信息管理", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
