@@ -8,18 +8,19 @@ package gui;
 import db.customerDAO;
 import entity.customer;
 import java.awt.HeadlessException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author mints
  */
-public class customerCheckIn extends javax.swing.JDialog {
+public class CustomerCheckIn extends javax.swing.JDialog {
 
     /**
      * Creates new form customerCheckIn
      */
-    public customerCheckIn(java.awt.Frame parent, boolean modal) {
+    public CustomerCheckIn(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
@@ -294,37 +295,42 @@ public class customerCheckIn extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void exit() throws HeadlessException {
-        int opt = JOptionPane.showConfirmDialog(this, "确认关闭当前窗口？");
+        int opt = JOptionPane.showConfirmDialog(this, "确认关闭当前窗口？", "确认", JOptionPane.YES_NO_OPTION);
         if (opt == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
 
     private void ex() {
-        int opt = JOptionPane.showConfirmDialog(this, "确认提交当前顾客信息？");
+        String customerName = JTextFieldCustomerName.getText();
+        String customerID = JTextFieldCustomerID.getText();
+        String gender = null;
+        if (jRadioButton1.isSelected()) {
+            gender = "男";
+        } else if (jRadioButton2.isSelected()) {
+            gender = "女";
+        }
+        String tele = JTextFieldTel.getText();
+        int opt = JOptionPane.showConfirmDialog(this, "确认提交当前顾客信息？", "确认", JOptionPane.YES_NO_OPTION);
         if (opt == JOptionPane.YES_OPTION) {
-            String customerName = JTextFieldCustomerName.getText();
-            String customerID = JTextFieldCustomerID.getText();
-            String gender = null;
-            String tele = JTextFieldTel.getText();
-            if (jRadioButton1.isSelected()) {
-                gender = "男";
-            } else if (jRadioButton2.isSelected()) {
-                gender = "女";
+            if (customerName .equals("")|| customerID.equals("")|| gender.equals("")|| tele .equals("") ||JTextFieldTenancy.getText().equals("") || JTextFieldDiscount.getText().equals("") || JTextFieldDeposit.getText().equals("") ) {
+                JOptionPane.showConfirmDialog(this, "请将信息填写完整！", "确认", JOptionPane.YES_NO_OPTION);
+            } else {
+                int tenancy = Integer.parseInt(JTextFieldTenancy.getText());
+                float discount = Float.parseFloat(JTextFieldDiscount.getText());
+                int deposit = Integer.parseInt(JTextFieldDeposit.getText());
+                customer c = new customer();
+                c.setCustomerName(customerName);
+                c.setCustomerID(customerID);
+                c.setGender(gender);
+                c.setTelephoneNo(tele);
+                c.setTenancy(tenancy);
+                c.setDiscount(discount);
+                c.setDeposit(deposit);
+                customerDAO cdao = new customerDAO();
+                cdao.updateCustomer(c);
+
             }
-            int tenancy = Integer.parseInt(JTextFieldTenancy.getText());
-            float discount = Float.parseFloat(JTextFieldDiscount.getText());
-            int deposit = Integer.parseInt(JTextFieldDeposit.getText());
-            customer c = new customer();
-            c.setCustomerName(customerName);
-            c.setCustomerID(customerID);
-            c.setGender(gender);
-            c.setTelephoneNo(tele);
-            c.setTenancy(tenancy);
-            c.setDiscount(discount);
-            c.setDeposit(deposit);
-            customerDAO cdao = new customerDAO();
-            cdao.updateCustomer(c);
         }
 
     }
@@ -346,20 +352,21 @@ public class customerCheckIn extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(customerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(customerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(customerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(customerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                customerCheckIn dialog = new customerCheckIn(new javax.swing.JFrame(), true);
+                CustomerCheckIn dialog = new CustomerCheckIn(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

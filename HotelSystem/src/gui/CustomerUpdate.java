@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  *
  * @author mints
  */
-public class customerUpdate extends javax.swing.JDialog {
+public class CustomerUpdate extends javax.swing.JDialog {
 
     /**
      * Creates new form customerUpdate
      */
-    public customerUpdate(java.awt.Frame parent, boolean modal) {
+    public CustomerUpdate(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
@@ -136,9 +136,8 @@ public class customerUpdate extends javax.swing.JDialog {
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel5)
                                         .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel10)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7))
                                 .addGap(42, 42, 42)
@@ -221,7 +220,6 @@ public class customerUpdate extends javax.swing.JDialog {
         } else {
             jRadioButton2.setSelected(true);
         }
-
         jTextFieldTele.setText(c.getTelephoneNo());
         jTextFieldRoomType.setText(c.getRoomType());
         jTextFieldRoomNo.setText(c.getRoomNo());
@@ -237,38 +235,43 @@ public class customerUpdate extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void ex() {
-        int opt = JOptionPane.showConfirmDialog(this, "确认修改当前顾客信息？");
+        String customerName = jTextFieldName.getText();
+        String customerId = jTextFieldCustomerID.getText();
+        System.out.println(customerId);
+        String gender = null;
+        if (jRadioButton1.isSelected()) {
+            gender = "男";
+        } else if (jRadioButton2.isSelected()) {
+            gender = "女";
+        }
+        String tele = jTextFieldTele.getText();
+        String roomType = jTextFieldRoomType.getText();
+        String roomNo = jTextFieldRoomNo.getText();
+        String start = jTextFieldStart.getText();
+        int opt = JOptionPane.showConfirmDialog(this, "确认修改当前顾客信息？", "确认", JOptionPane.YES_NO_OPTION);
         if (opt == JOptionPane.YES_OPTION) {
-            String customerName = jTextFieldName.getText();
-            String customerID = jTextFieldCustomerID.getText();
-            String tele = jTextFieldTele.getText();
-            String roomType = jTextFieldRoomType.getText();
-            String roomNo = jTextFieldRoomNo.getText();
-            String start = jTextFieldStart.getText();
-            int tenancy = Integer.parseInt(jTextFieldTenancy.getText());
-            float discount = Float.parseFloat(jTextFieldDiscount.getText());
-            int deposit = Integer.parseInt(jTextFieldDeposit.getText());
+            if (customerName.equals("") || customerId .equals("") || gender.equals(null) || tele.equals("")|| roomType.equals("")|| roomNo .equals("") || start.equals("")|| jTextFieldTenancy.getText().equals("") || jTextFieldDiscount.getText().equals("") || jTextFieldDeposit.getText().equals("")) {
+                JOptionPane.showConfirmDialog(this, "请将信息填写完整！", "确认", JOptionPane.YES_NO_OPTION);
+            } else {
 
-            String gender = null;
-            if (jRadioButton1.isSelected()) {
-                gender = "男";
-            } else if (jRadioButton2.isSelected()) {
-                gender = "女";
+                int tenancy = Integer.parseInt(jTextFieldTenancy.getText());
+                float discount = Float.parseFloat(jTextFieldDiscount.getText());
+                int deposit = Integer.parseInt(jTextFieldDeposit.getText());
+                customer c = new customer();
+                c.setCustomerNo(customerNo);
+                c.setCustomerName(customerName);
+                c.setCustomerID(customerId);
+                c.setGender(gender);
+                c.setTelephoneNo(tele);
+                c.setRoomNo(roomNo);
+                c.setRoomType(roomType);
+                c.setStartDate(start);
+                c.setTenancy(tenancy);
+                c.setDiscount(discount);
+                c.setDeposit(deposit);
+                customerDAO cdao = new customerDAO();
+                cdao.updateCustomerAll(c);
             }
-            customer c = new customer();
-            c.setCustomerNo(customerNo);
-            c.setCustomerName(customerName);
-            c.setCustomerID(customerID);
-            c.setGender(gender);
-            c.setTelephoneNo(tele);
-            c.setRoomNo(roomNo);
-            c.setRoomType(roomType);
-            c.setStartDate(start);
-            c.setTenancy(tenancy);
-            c.setDiscount(discount);
-            c.setDeposit(deposit);
-            customerDAO cdao = new customerDAO();
-            cdao.updateCustomerAll(c);
         }
 
     }
@@ -290,20 +293,21 @@ public class customerUpdate extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(customerUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(customerUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(customerUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(customerUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                customerUpdate dialog = new customerUpdate(new javax.swing.JFrame(), true);
+                CustomerUpdate dialog = new CustomerUpdate(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
