@@ -106,7 +106,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jButtonAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdministratorActionPerformed
         // TODO add your handling code here:
-        AdministerSystem c = new AdministerSystem(this, true);
+        AdminSignIn c = new AdminSignIn(this, true);
         c.setVisible(true);
     }//GEN-LAST:event_jButtonAdministratorActionPerformed
 

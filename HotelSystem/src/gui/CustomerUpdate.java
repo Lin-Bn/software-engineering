@@ -237,7 +237,6 @@ public class CustomerUpdate extends javax.swing.JDialog {
     private void ex() {
         String customerName = jTextFieldName.getText();
         String customerId = jTextFieldCustomerID.getText();
-        System.out.println(customerId);
         String gender = null;
         if (jRadioButton1.isSelected()) {
             gender = "男";
