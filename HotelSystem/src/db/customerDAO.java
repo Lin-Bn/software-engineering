@@ -17,6 +17,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class customerDAO {
 
+    public boolean saveCustomer1(customer c) {
+        try {
+            Connection conn = DBHelper.getConnection();
+            String sql = "insert into customer(customerName,telephoneNo,roomType,startDate,roomNo)" + " values (?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, c.getCustomerName());
+            ps.setString(2, c.getTelephoneNo());
+            ps.setString(3, c.getRoomType());
+            ps.setString(4, c.getStartDate());   
+            ps.setInt(5, c.getRoomNo());
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean saveCustomer(customer c) {
         try {
             Connection conn = DBHelper.getConnection();
@@ -29,7 +48,7 @@ public class customerDAO {
             ps.setString(5, c.getRoomType());
             ps.setString(6, c.getStartDate());
             ps.setInt(7, c.getTenancy());
-            ps.setString(8, c.getRoomNo());
+            ps.setInt(8, c.getRoomNo());
             ps.setFloat(9, c.getDiscount());
             ps.executeUpdate();
             ps.close();
@@ -60,7 +79,7 @@ public class customerDAO {
                 c.setRoomType(rs.getString("roomType"));
                 c.setStartDate(rs.getString("startDate"));
                 c.setTenancy(rs.getInt("tenancy"));
-                c.setRoomNo(rs.getString("roomNo"));
+                c.setRoomNo(rs.getInt("roomNo"));
                 c.setDeposit(rs.getInt("deposit"));
                 c.setDiscount(rs.getFloat("discount"));
                 c.setTelephoneNo(rs.getString("telephoneNo"));
@@ -97,7 +116,7 @@ public class customerDAO {
     public boolean updateCustomerAll(customer c) {
         try {
             Connection conn = DBHelper.getConnection();
-            String sql = "update customer set customerName=?,customerId=?,gender=?,telephoneNo=?,roomType=?,startDate=?,tenancy=?,discount=?,deposit=? where customerNo=?";
+            String sql = "update customer set customerName=?,customerId=?,gender=?,telephoneNo=?,roomType=?,startDate=?,tenancy=?,roomNo=?,discount=?,deposit=? where customerNo=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getCustomerName());
             ps.setString(2, c.getCustomerID());
@@ -106,9 +125,10 @@ public class customerDAO {
             ps.setString(5, c.getRoomType());
             ps.setString(6, c.getStartDate());
             ps.setInt(7, c.getTenancy());
-            ps.setFloat(8, c.getDiscount());
-            ps.setInt(9, c.getDeposit());
-            ps.setInt(10, c.getCustomerNo());
+            ps.setInt(8, c.getRoomNo());
+            ps.setFloat(9, c.getDiscount());
+            ps.setInt(10, c.getDeposit());
+            ps.setInt(11, c.getCustomerNo());
             ps.executeUpdate();
             ps.close();
 
@@ -179,20 +199,20 @@ public class customerDAO {
         return r;
     }
 
-    public String getRoomPrice(String roomNo) {
+    public int getRoomPrice(int roomNo) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         customer c = null;
-        String r = null;
+        int r=0;
         try {
             conn = DBHelper.getConnection();
-            String sql = "select roomPrice from room where roomNo=?";
+            String sql = "select room_price from room where room_number=?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, roomNo);
+            pstmt.setInt(1, roomNo);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                r = rs.getString("roomPrice");
+                r = rs.getInt("room_price");
             }
             rs.close();
             pstmt.close();

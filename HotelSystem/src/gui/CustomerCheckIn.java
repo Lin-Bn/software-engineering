@@ -295,28 +295,27 @@ public class CustomerCheckIn extends javax.swing.JDialog {
         customerDAO cdao = new customerDAO();
         String roomNo = cdao.getRoomNo(tele);
         JTextFieldRoom.setText(roomNo);
-
+        
         String roomType = cdao.getRoomType(tele);
         JTextFieldRoomType.setText(roomType);
-
-        /*
-        String p=cdao.getRoomPrice(roomNo);
-        price.setText(p);
-         */
-        JTextFieldPrice.setText("200");//房间数据库宝诚还没给我，所以这里暂设为200
+        
+        int no = Integer.parseInt(roomNo);
+        int p = cdao.getRoomPrice(no);
+        JTextFieldPrice.setText(String.valueOf(p));
+        
     }//GEN-LAST:event_JButtonQueryActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
-
+    
     private void exit() throws HeadlessException {
         int opt = JOptionPane.showConfirmDialog(this, "确认关闭当前窗口？", "确认", JOptionPane.YES_NO_OPTION);
         if (opt == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
-
+    
     private void ex() {
         String customerName = JTextFieldCustomerName.getText();
         String customerID = JTextFieldCustomerID.getText();
@@ -329,7 +328,7 @@ public class CustomerCheckIn extends javax.swing.JDialog {
         String tele = JTextFieldTel.getText();
         int opt = JOptionPane.showConfirmDialog(this, "确认提交当前顾客信息？", "确认", JOptionPane.YES_NO_OPTION);
         if (opt == JOptionPane.YES_OPTION) {
-            if (customerName .equals("")|| customerID.equals("")|| gender.equals("")|| tele .equals("") ||JTextFieldTenancy.getText().equals("") || JTextFieldDiscount.getText().equals("") || JTextFieldDeposit.getText().equals("") ) {
+            if (customerName.equals("") || customerID.equals("") || gender.equals("") || tele.equals("") || JTextFieldTenancy.getText().equals("") || JTextFieldDiscount.getText().equals("") || JTextFieldDeposit.getText().equals("")) {
                 JOptionPane.showConfirmDialog(this, "请将信息填写完整！", "确认", JOptionPane.YES_NO_OPTION);
             } else {
                 int tenancy = Integer.parseInt(JTextFieldTenancy.getText());
@@ -345,10 +344,10 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                 c.setDeposit(deposit);
                 customerDAO cdao = new customerDAO();
                 cdao.updateCustomer(c);
-
+                
             }
         }
-
+        
     }
 
     /**

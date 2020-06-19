@@ -38,7 +38,7 @@ public class testDBHelper {
                 c.setRoomType(rs.getString("roomType"));
                 c.setStartDate(rs.getString("startDate"));
                 c.setTenancy(rs.getInt("tenancy"));
-                c.setRoomNo(rs.getString("roomNo"));
+                c.setRoomNo(rs.getInt("roomNo"));
             }
             rs.close();
             pstmt.close();
@@ -59,7 +59,7 @@ public class testDBHelper {
             ps.setString(4, c.getRoomType());
             ps.setString(5, c.getStartDate());
             ps.setInt(6, c.getTenancy());
-            ps.setString(7, c.getRoomNo());
+            ps.setInt(7, c.getRoomNo());
             ps.executeUpdate();
             ps.close();
             return true;
@@ -115,7 +115,7 @@ public class testDBHelper {
         customer c = new customer();
         customerDAO cdao=new customerDAO();
         cdao.deleteCustomer(3);
-        */
+        
         customer c1 = new customer();
         customerDAO cdao=new customerDAO();
         c1.setCustomerNo(2);
@@ -125,10 +125,14 @@ public class testDBHelper {
         c1.setRoomType("双人间");
         c1.setStartDate("2019.6.19");
         c1.setTenancy(7);
-        c1.setRoomNo("26");
+        c1.setRoomNo(26);
         c1.setTelephoneNo("13156455");
         c1.setDiscount(1);
         c1.setDeposit(400);
         cdao.updateCustomer(c1);
+        */
+        customer c1 = new customer();
+        c1.setRoomNo(5);
+        System.out.println(c1.getRoomNo());
     }
 }

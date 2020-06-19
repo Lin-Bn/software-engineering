@@ -33,6 +33,7 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
+        jButtonRoomQuery = new javax.swing.JButton();
         jButtonCustomer = new javax.swing.JButton();
         jButtonAdministrator = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -48,6 +49,17 @@ public class Main extends javax.swing.JFrame {
         });
 
         jToolBar1.setRollover(true);
+
+        jButtonRoomQuery.setText("房间查询");
+        jButtonRoomQuery.setFocusable(false);
+        jButtonRoomQuery.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonRoomQuery.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonRoomQuery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRoomQueryActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonRoomQuery);
 
         jButtonCustomer.setText("顾客入住手续办理");
         jButtonCustomer.setFocusable(false);
@@ -110,6 +122,12 @@ public class Main extends javax.swing.JFrame {
         c.setVisible(true);
     }//GEN-LAST:event_jButtonAdministratorActionPerformed
 
+    private void jButtonRoomQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRoomQueryActionPerformed
+        // TODO add your handling code here:
+        RoomQuery c = new RoomQuery();
+        c.setVisible(true);
+    }//GEN-LAST:event_jButtonRoomQueryActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -155,6 +173,7 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdministrator;
     private javax.swing.JButton jButtonCustomer;
+    private javax.swing.JButton jButtonRoomQuery;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
