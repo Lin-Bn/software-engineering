@@ -136,8 +136,13 @@ public class CustomerUpdate extends javax.swing.JDialog {
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel5)
                                         .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel10)
+
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7))
                                 .addGap(42, 42, 42)
@@ -220,9 +225,16 @@ public class CustomerUpdate extends javax.swing.JDialog {
         } else {
             jRadioButton2.setSelected(true);
         }
+
         jTextFieldTele.setText(c.getTelephoneNo());
         jTextFieldRoomType.setText(c.getRoomType());
         jTextFieldRoomNo.setText(String.valueOf(c.getRoomNo()));
+
+
+        jTextFieldTele.setText(c.getTelephoneNo());
+        jTextFieldRoomType.setText(c.getRoomType());
+        jTextFieldRoomNo.setText(c.getRoomNo());
+
         jTextFieldStart.setText(c.getStartDate());
         jTextFieldTenancy.setText(String.valueOf(c.getTenancy()));
         jTextFieldDiscount.setText(String.valueOf(c.getDiscount()));
@@ -235,6 +247,7 @@ public class CustomerUpdate extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void ex() {
+
         String customerName = jTextFieldName.getText();
         String customerId = jTextFieldCustomerID.getText();
         String gender = null;
@@ -271,6 +284,7 @@ public class CustomerUpdate extends javax.swing.JDialog {
                 customerDAO cdao = new customerDAO();
                 cdao.updateCustomerAll(c);
             }
+
         }
 
     }

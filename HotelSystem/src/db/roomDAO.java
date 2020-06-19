@@ -5,11 +5,14 @@
  */
 package db;
 
+
 import db.DBHelper;
+
 import entity.room;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -63,6 +66,7 @@ public class roomDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
         return c;
     }
 
@@ -124,6 +128,7 @@ public class roomDAO {
         }
         return true;
     }
+
 
     //查询1/7 已知type求number√
     public int getRoomNumber1(String room_type) {
@@ -299,3 +304,4 @@ public class roomDAO {
         return r;
     }
 }
+

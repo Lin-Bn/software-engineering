@@ -5,6 +5,7 @@
  */
 package entity;
 
+
 /**
  *
  * @author dell
@@ -64,4 +65,5 @@ public class room {
     public String toString() {
         return "room{" + "room_type=" + room_type + ", room_number=" + room_number + ", room_price=" + room_price + ", room_free=" + room_free + ", room_square=" + room_square + '}';
     }
+
 }
