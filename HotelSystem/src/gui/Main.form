@@ -64,6 +64,17 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
+        <Component class="javax.swing.JButton" name="jButtonRoomQuery">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x623f;&#x95f4;&#x67e5;&#x8be2;"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRoomQueryActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JButton" name="jButtonCustomer">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x987e;&#x5ba2;&#x5165;&#x4f4f;&#x624b;&#x7eed;&#x529e;&#x7406;"/>

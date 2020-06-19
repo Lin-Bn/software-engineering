@@ -8,6 +8,9 @@ package gui;
 import db.customerDAO;
 import entity.customer;
 import java.awt.HeadlessException;
+
+import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -60,6 +63,9 @@ public class CustomerCheckIn extends javax.swing.JDialog {
         JTextFieldTel = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         JButtonQuery = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -138,6 +144,12 @@ public class CustomerCheckIn extends javax.swing.JDialog {
             }
         });
 
+
+        jLabel11.setText("顾客预约信息查询");
+
+        jLabel12.setText("顾客详细信息录入");
+
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,6 +172,22 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(JTextFieldTenancy, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
+
+                                            .addComponent(jLabel10)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(JTextFieldDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel12)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jLabel4)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(JTextFieldCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(jLabel5)))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(JTextFieldCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+
                                             .addComponent(jLabel4)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(JTextFieldCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,6 +199,7 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                                             .addComponent(jLabel10)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(JTextFieldDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -196,6 +225,18 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(JTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(61, 61, 61)
+                                        .addComponent(JButtonQuery)))
+
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                                 .addComponent(jLabel7)
@@ -203,13 +244,20 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                                 .addComponent(JTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(61, 61, 61)
                                 .addComponent(JButtonQuery)
+
                                 .addGap(95, 95, 95)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+
+                .addGap(9, 9, 9)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+
                 .addGap(40, 40, 40)
+
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(JTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,7 +272,13 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                     .addComponent(JTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(JTextFieldCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,6 +333,15 @@ public class CustomerCheckIn extends javax.swing.JDialog {
         String roomNo = cdao.getRoomNo(tele);
         JTextFieldRoom.setText(roomNo);
 
+        
+        String roomType = cdao.getRoomType(tele);
+        JTextFieldRoomType.setText(roomType);
+        
+        int no = Integer.parseInt(roomNo);
+        int p = cdao.getRoomPrice(no);
+        JTextFieldPrice.setText(String.valueOf(p));
+        
+
         String roomType = cdao.getRoomType(tele);
         JTextFieldRoomType.setText(roomType);
 
@@ -287,46 +350,54 @@ public class CustomerCheckIn extends javax.swing.JDialog {
         price.setText(p);
          */
         JTextFieldPrice.setText("200");//房间数据库宝诚还没给我，所以这里暂设为200
+
     }//GEN-LAST:event_JButtonQueryActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
-
+    
     private void exit() throws HeadlessException {
-        int opt = JOptionPane.showConfirmDialog(this, "确认关闭当前窗口？");
+        int opt = JOptionPane.showConfirmDialog(this, "确认关闭当前窗口？", "确认", JOptionPane.YES_NO_OPTION);
+
         if (opt == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
 
+    
     private void ex() {
-        int opt = JOptionPane.showConfirmDialog(this, "确认提交当前顾客信息？");
-        if (opt == JOptionPane.YES_OPTION) {
-            String customerName = JTextFieldCustomerName.getText();
-            String customerID = JTextFieldCustomerID.getText();
-            String gender = null;
-            String tele = JTextFieldTel.getText();
-            if (jRadioButton1.isSelected()) {
-                gender = "男";
-            } else if (jRadioButton2.isSelected()) {
-                gender = "女";
-            }
-            int tenancy = Integer.parseInt(JTextFieldTenancy.getText());
-            float discount = Float.parseFloat(JTextFieldDiscount.getText());
-            int deposit = Integer.parseInt(JTextFieldDeposit.getText());
-            customer c = new customer();
-            c.setCustomerName(customerName);
-            c.setCustomerID(customerID);
-            c.setGender(gender);
-            c.setTelephoneNo(tele);
-            c.setTenancy(tenancy);
-            c.setDiscount(discount);
-            c.setDeposit(deposit);
-            customerDAO cdao = new customerDAO();
-            cdao.updateCustomer(c);
+        String customerName = JTextFieldCustomerName.getText();
+        String customerID = JTextFieldCustomerID.getText();
+        String gender = null;
+        if (jRadioButton1.isSelected()) {
+            gender = "男";
+        } else if (jRadioButton2.isSelected()) {
+            gender = "女";
         }
-
+        String tele = JTextFieldTel.getText();
+        int opt = JOptionPane.showConfirmDialog(this, "确认提交当前顾客信息？", "确认", JOptionPane.YES_NO_OPTION);
+        if (opt == JOptionPane.YES_OPTION) {
+            if (customerName.equals("") || customerID.equals("") || gender.equals("") || tele.equals("") || JTextFieldTenancy.getText().equals("") || JTextFieldDiscount.getText().equals("") || JTextFieldDeposit.getText().equals("")) {
+                JOptionPane.showConfirmDialog(this, "请将信息填写完整！", "确认", JOptionPane.YES_NO_OPTION);
+            } else {
+                int tenancy = Integer.parseInt(JTextFieldTenancy.getText());
+                float discount = Float.parseFloat(JTextFieldDiscount.getText());
+                int deposit = Integer.parseInt(JTextFieldDeposit.getText());
+                customer c = new customer();
+                c.setCustomerName(customerName);
+                c.setCustomerID(customerID);
+                c.setGender(gender);
+                c.setTelephoneNo(tele);
+                c.setTenancy(tenancy);
+                c.setDiscount(discount);
+                c.setDeposit(deposit);
+                customerDAO cdao = new customerDAO();
+                cdao.updateCustomer(c);
+                
+            }
+        }
+        
     }
 
     /**
@@ -388,6 +459,10 @@ public class CustomerCheckIn extends javax.swing.JDialog {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

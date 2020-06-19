@@ -19,7 +19,7 @@ public class customer {
     private String roomType;
     private String startDate;
     private int tenancy;
-    private String roomNo;
+    private int roomNo;
     private float discount;
     private int deposit;
 
@@ -43,6 +43,10 @@ public class customer {
         return gender;
     }
 
+    public String getTelephoneNo() {
+        return telephoneNo;
+    }
+
     public String getRoomType() {
         return roomType;
     }
@@ -55,12 +59,8 @@ public class customer {
         return tenancy;
     }
 
-    public String getRoomNo() {
+    public int getRoomNo() {
         return roomNo;
-    }
-
-    public String getTelephoneNo() {
-        return telephoneNo;
     }
 
     public float getDiscount() {
@@ -87,6 +87,10 @@ public class customer {
         this.gender = gender;
     }
 
+    public void setTelephoneNo(String telephoneNo) {
+        this.telephoneNo = telephoneNo;
+    }
+
     public void setRoomType(String roomType) {
         this.roomType = roomType;
     }
@@ -99,12 +103,8 @@ public class customer {
         this.tenancy = tenancy;
     }
 
-    public void setRoomNo(String roomNo) {
+    public void setRoomNo(int roomNo) {
         this.roomNo = roomNo;
-    }
-
-    public void setTelephoneNo(String telephoneNo) {
-        this.telephoneNo = telephoneNo;
     }
 
     public void setDiscount(float discount) {
@@ -119,5 +119,4 @@ public class customer {
     public String toString() {
         return "customer{" + "customerNo=" + customerNo + ", customerName=" + customerName + ", customerID=" + customerID + ", gender=" + gender + ", telephoneNo=" + telephoneNo + ", roomType=" + roomType + ", startDate=" + startDate + ", tenancy=" + tenancy + ", roomNo=" + roomNo + ", discount=" + discount + ", deposit=" + deposit + '}';
     }
-
 }
