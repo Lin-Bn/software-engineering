@@ -35,6 +35,7 @@ public class Main extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jButtonCustomer = new javax.swing.JButton();
         jButtonAdministrator = new javax.swing.JButton();
+        jButtonAdministrator1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -68,6 +69,17 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButtonAdministrator);
+
+        jButtonAdministrator1.setText("结算系统");
+        jButtonAdministrator1.setFocusable(false);
+        jButtonAdministrator1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonAdministrator1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonAdministrator1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdministrator1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonAdministrator1);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -109,6 +121,12 @@ public class Main extends javax.swing.JFrame {
         AdministerSystem c = new AdministerSystem(this, true);
         c.setVisible(true);
     }//GEN-LAST:event_jButtonAdministratorActionPerformed
+
+    private void jButtonAdministrator1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdministrator1ActionPerformed
+        // TODO add your handling code here:
+        Settlement c = new Settlement(this, true);
+        c.setVisible(true);
+    }//GEN-LAST:event_jButtonAdministrator1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,6 +172,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdministrator;
+    private javax.swing.JButton jButtonAdministrator1;
     private javax.swing.JButton jButtonCustomer;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
