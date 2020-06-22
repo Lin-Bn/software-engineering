@@ -5,6 +5,7 @@
  */
 package gui;
 
+import CheckType.Check;
 import db.customerDAO;
 import entity.customer;
 import javax.swing.JOptionPane;
@@ -136,13 +137,8 @@ public class CustomerUpdate extends javax.swing.JDialog {
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel5)
                                         .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
-
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel10)
-
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7))
                                 .addGap(42, 42, 42)
@@ -225,16 +221,9 @@ public class CustomerUpdate extends javax.swing.JDialog {
         } else {
             jRadioButton2.setSelected(true);
         }
-
         jTextFieldTele.setText(c.getTelephoneNo());
-        jTextFieldRoomType.setText(c.getRoomType());
+        jTextFieldRoomType.setText(cdao.getRoomTypeFromRoomNo(c.getRoomNo()));
         jTextFieldRoomNo.setText(String.valueOf(c.getRoomNo()));
-
-
-        jTextFieldTele.setText(c.getTelephoneNo());
-        jTextFieldRoomType.setText(c.getRoomType());
-        jTextFieldRoomNo.setText(c.getRoomNo());
-
         jTextFieldStart.setText(c.getStartDate());
         jTextFieldTenancy.setText(String.valueOf(c.getTenancy()));
         jTextFieldDiscount.setText(String.valueOf(c.getDiscount()));
@@ -247,7 +236,6 @@ public class CustomerUpdate extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void ex() {
-
         String customerName = jTextFieldName.getText();
         String customerId = jTextFieldCustomerID.getText();
         String gender = null;
@@ -259,32 +247,68 @@ public class CustomerUpdate extends javax.swing.JDialog {
         String tele = jTextFieldTele.getText();
         String roomType = jTextFieldRoomType.getText();
         String start = jTextFieldStart.getText();
+
         int opt = JOptionPane.showConfirmDialog(this, "确认修改当前顾客信息？", "确认", JOptionPane.YES_NO_OPTION);
         if (opt == JOptionPane.YES_OPTION) {
-            if (customerName.equals("") || customerId .equals("") || gender.equals(null) || tele.equals("")|| roomType.equals("")|| start.equals("")|| jTextFieldTenancy.getText().equals("") || jTextFieldDiscount.getText().equals("") || jTextFieldDeposit.getText().equals("")||jTextFieldRoomNo.getText().equals("")) {
+            if (customerName.equals("") || customerId.equals("") || gender.equals(null) || tele.equals("") || roomType.equals("") || start.equals("") || jTextFieldTenancy.getText().equals("") || jTextFieldDiscount.getText().equals("") || jTextFieldDeposit.getText().equals("") || jTextFieldRoomNo.getText().equals("")) {
                 JOptionPane.showConfirmDialog(this, "请将信息填写完整！", "确认", JOptionPane.YES_NO_OPTION);
             } else {
-
                 int tenancy = Integer.parseInt(jTextFieldTenancy.getText());
                 float discount = Float.parseFloat(jTextFieldDiscount.getText());
                 int deposit = Integer.parseInt(jTextFieldDeposit.getText());
-                int roomNo=Integer.parseInt(jTextFieldRoomNo.getText());
-                customer c = new customer();
-                c.setCustomerNo(customerNo);
-                c.setCustomerName(customerName);
-                c.setCustomerID(customerId);
-                c.setGender(gender);
-                c.setTelephoneNo(tele);
-                c.setRoomNo(roomNo);
-                c.setRoomType(roomType);
-                c.setStartDate(start);
-                c.setTenancy(tenancy);
-                c.setDiscount(discount);
-                c.setDeposit(deposit);
-                customerDAO cdao = new customerDAO();
-                cdao.updateCustomerAll(c);
-            }
+                int roomNo = Integer.parseInt(jTextFieldRoomNo.getText());
+                Check check = new Check();
+                boolean checkName = check.checkChineseAndEnglich(customerName);
+                if (checkName && customerName.length() < 21) {
+                    boolean checkId = check.checkId(customerId);
+                    if (checkId) {
+                        boolean checkTel = check.checkNumber(tele);
+                        int telLength = tele.length();
+                        if (checkTel && telLength > 7 && telLength < 12) {
+                            boolean checkDate = check.checkDate(start);
+                            if (checkDate) {
+                                boolean checkTenancy = check.checkNumber(jTextFieldTenancy.getText());
+                                if (tenancy > 0 && checkTenancy) {
+                                    boolean checkDiscount = check.checkFloat(jTextFieldDiscount.getText());
+                                    if (checkDiscount) {
+                                        boolean checkDeposit = check.checkNumber(jTextFieldDeposit.getText());
+                                        if (deposit >= 0 && checkDeposit) {
+                                            customer c = new customer();
+                                            c.setCustomerNo(customerNo);
+                                            c.setCustomerName(customerName);
+                                            c.setCustomerID(customerId);
+                                            c.setGender(gender);
+                                            c.setTelephoneNo(tele);
+                                            c.setRoomNo(roomNo);
+                                            c.setStartDate(start);
+                                            c.setTenancy(tenancy);
+                                            c.setDiscount(discount);
+                                            c.setDeposit(deposit);
+                                            customerDAO cdao = new customerDAO();
+                                            cdao.updateCustomerAll(c);
+                                        } else {
+                                            JOptionPane.showMessageDialog(this, "押金要大于等于0且只能由整数数字组成!");
+                                        }
+                                    } else {
+                                        JOptionPane.showMessageDialog(this, "折扣折扣只能由小于等于1的小数组成!");
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "租期大于0且只能由整数数字组成!");
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "日期格式为yyyy.MM.dd!");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "手机号只能由8-11位数字组成!");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "身份证号只能由17位数字和数字或xX组成!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "姓名只能由中文和英文组成且长度不超过20!");
+                }
 
+            }
         }
 
     }

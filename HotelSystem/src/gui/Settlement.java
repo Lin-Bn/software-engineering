@@ -28,6 +28,7 @@ public class Settlement extends javax.swing.JDialog {
     public Settlement(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
     }
 
     /**
@@ -53,8 +54,11 @@ public class Settlement extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jTextFieldTenancy = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("结算系统");
 
         jButtonQuery.setText("查询");
         jButtonQuery.addActionListener(new java.awt.event.ActionListener() {
@@ -92,34 +96,39 @@ public class Settlement extends javax.swing.JDialog {
 
         jLabel6.setText("实缴金额：");
 
+        jLabel7.setText("居住天数：");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(104, Short.MAX_VALUE)
+                .addContainerGap(142, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonSettlement)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldPayment)
-                            .addComponent(jTextFieldPayable)
-                            .addComponent(jTextFieldCustomerDiscount)
-                            .addComponent(jTextFieldCustomerId)
-                            .addComponent(jTextFieldCustomerName)
-                            .addComponent(jTextFieldRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldTenancy, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldPayment, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldPayable, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCustomerDiscount, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCustomerId, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCustomerName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldRoomNo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                        .addGap(33, 33, 33)
                         .addComponent(jButtonQuery)))
-                .addGap(56, 56, 56))
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +159,11 @@ public class Settlement extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldTenancy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSettlement)
                 .addGap(40, 40, 40))
         );
@@ -172,12 +185,12 @@ public class Settlement extends javax.swing.JDialog {
         ResultSet rs = null;
         settlementDAO sDAO = new settlementDAO();
         roomDAO rDAO = new roomDAO();
-        String roomNo = jTextFieldRoomNo.getText();
+        int roomNo = Integer.valueOf(jTextFieldRoomNo.getText());
         try {
             conn = DBHelper.getConnection();
-            String sql = "SELECT c.customerNo, c.startDate, c.tenancy FROM customer c, room r WHERE r.roomFree=1 AND r.roomNo=c.roomNo AND c.roomNo=?";
+            String sql = "SELECT c.customerNo, c.startDate, c.tenancy FROM customer c, room r WHERE r.room_free=0 AND r.room_number=c.roomNo AND c.roomNo=?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, roomNo);
+            pstmt.setInt(1, roomNo);
             rs = pstmt.executeQuery();
             rs.last();
             count = Float.valueOf(jTextFieldPayable.getText()) * Float.valueOf(jTextFieldCustomerDiscount.getText());
@@ -187,48 +200,71 @@ public class Settlement extends javax.swing.JDialog {
             s.setTenancy(rs.getInt(3));
             s.setPayable(Float.valueOf(jTextFieldPayable.getText()));
             s.setPayment(count);
-            if(rDAO.changeRoomFree(roomNo)){
+            if (rDAO.changeRoomFree(roomNo)) {
                 sDAO.saveSettlement(s);
                 JOptionPane.showMessageDialog(null, "结算成功");
-            }    
+            }
             rs.close();
             pstmt.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_jButtonSettlementActionPerformed
 
     private void jButtonQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQueryActionPerformed
         // TODO add your handling code here:
-        String roomNo;
-        roomNo = jTextFieldRoomNo.getText();
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            conn = DBHelper.getConnection();
-            String sql = "SELECT c.customerName, c.customerId, c.discount, r.roomPrice FROM customer c, room r WHERE r.roomFree=1 AND r.roomNo=c.roomNo AND c.roomNo=?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, roomNo);
-            rs = pstmt.executeQuery();
-            if(rs.next() != false){
-                rs.last();
-                float count = 0;
-                jTextFieldCustomerName.setText(rs.getString(1));
-                jTextFieldCustomerId.setText(rs.getString(2));
-                jTextFieldCustomerDiscount.setText(Float.toString(rs.getFloat(3)));
-                count = rs.getFloat(3) * rs.getFloat(4);
-                jTextFieldPayable.setText(Float.toString(count));
-                jTextFieldPayment.setText(Float.toString(count));
-            }else{
-                JOptionPane.showMessageDialog(null, "该房间无人住");
+        if (jTextFieldRoomNo.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "请输入房间号");
+        } else {
+            int roomNo = Integer.valueOf(jTextFieldRoomNo.getText());
+            try {
+                Connection connRoom = null;
+                PreparedStatement pstmtRoom = null;
+                ResultSet rsRoom = null;
+                connRoom = DBHelper.getConnection();
+                String sqlRoom = "SELECT room_free FROM room WHERE room_number=?";
+                pstmtRoom = connRoom.prepareStatement(sqlRoom);
+                pstmtRoom.setInt(1, roomNo);
+                rsRoom = pstmtRoom.executeQuery();
+                if (rsRoom.next() != false) {
+                    Connection conn = null;
+                    PreparedStatement pstmt = null;
+                    ResultSet rs = null;
+                    try {
+                        conn = DBHelper.getConnection();
+                        String sql = "SELECT c.customerName, c.customerId, c.discount, r.room_price, c.tenancy FROM customer c, room r WHERE r.room_free=0 AND r.room_number=c.roomNo AND c.roomNo=?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setInt(1, roomNo);
+                        rs = pstmt.executeQuery();
+                        if (rs.next() != false) {
+                            rs.last();
+                            float count = 0;
+                            jTextFieldCustomerName.setText(rs.getString(1));
+                            jTextFieldCustomerId.setText(rs.getString(2));
+                            jTextFieldCustomerDiscount.setText(Float.toString(rs.getFloat(3)));
+                            count = rs.getFloat(3) * rs.getFloat(4) * rs.getInt(5);
+                            jTextFieldPayable.setText(Float.toString(count));
+                            jTextFieldPayment.setText(Float.toString(count));
+                            jTextFieldTenancy.setText(Integer.toString(rs.getInt(5)));
+                        } else {
+                            JOptionPane.showMessageDialog(null, "该房间无人住");
+                        }
+
+                        rs.close();
+                        pstmt.close();
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "查无该房间");
+                }
+                rsRoom.close();;
+                pstmtRoom.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-            
-            rs.close();
-            pstmt.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }//GEN-LAST:event_jButtonQueryActionPerformed
 
@@ -258,6 +294,7 @@ public class Settlement extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(Settlement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -283,11 +320,13 @@ public class Settlement extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField jTextFieldCustomerDiscount;
     private javax.swing.JTextField jTextFieldCustomerId;
     private javax.swing.JTextField jTextFieldCustomerName;
     private javax.swing.JTextField jTextFieldPayable;
     private javax.swing.JTextField jTextFieldPayment;
     private javax.swing.JTextField jTextFieldRoomNo;
+    private javax.swing.JTextField jTextFieldTenancy;
     // End of variables declaration//GEN-END:variables
 }

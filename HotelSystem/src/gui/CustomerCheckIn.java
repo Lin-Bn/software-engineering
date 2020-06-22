@@ -5,12 +5,15 @@
  */
 package gui;
 
+import CheckType.Check;
+import db.DBHelper;
 import db.customerDAO;
+import db.roomDAO;
 import entity.customer;
 import java.awt.HeadlessException;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.swing.JFrame;
-
 import javax.swing.JOptionPane;
 
 /**
@@ -41,8 +44,6 @@ public class CustomerCheckIn extends javax.swing.JDialog {
         jDialog1 = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         JTextFieldRoom = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        JTextFieldRoomType = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         JTextFieldPrice = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -65,7 +66,6 @@ public class CustomerCheckIn extends javax.swing.JDialog {
         JButtonQuery = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -93,8 +93,6 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                 JTextFieldRoomActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("房间类型:");
 
         jLabel3.setText("单价/天:");
 
@@ -144,120 +142,82 @@ public class CustomerCheckIn extends javax.swing.JDialog {
             }
         });
 
-
         jLabel11.setText("顾客预约信息查询");
 
         jLabel12.setText("顾客详细信息录入");
-
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(72, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(JButtonQuery))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JTextFieldRoom)
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(93, 93, 93)
+                        .addGap(93, 93, 93)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JTextFieldDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JTextFieldTenancy, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JTextFieldDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel9)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JTextFieldDiscount)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JTextFieldTenancy, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-
-                                            .addComponent(jLabel10)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JTextFieldDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(jLabel12)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(jLabel4)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(JTextFieldCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(jLabel5)))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JTextFieldCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JTextFieldCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JTextFieldCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel10)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(JTextFieldDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jRadioButton1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jRadioButton2))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(220, 220, 220)
-                                .addComponent(jButtonConfirm)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTextFieldRoom)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTextFieldRoomType, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(JTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(61, 61, 61)
-                                        .addComponent(JButtonQuery)))
-
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                                .addComponent(jLabel7)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(JTextFieldCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JTextFieldCustomerID, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(JTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(JButtonQuery)
-
-                                .addGap(95, 95, 95)))))
-                .addContainerGap())
+                                .addComponent(jRadioButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton2))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addComponent(jButtonConfirm)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-
                 .addGap(9, 9, 9)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-
-                .addGap(40, 40, 40)
-
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(JTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,19 +226,13 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(JTextFieldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(JTextFieldRoomType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(JTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(JTextFieldCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -314,62 +268,10 @@ public class CustomerCheckIn extends javax.swing.JDialog {
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
         // TODO add your handling code here:
-        ex();
-    }//GEN-LAST:event_jButtonConfirmActionPerformed
-
-    private void JTextFieldDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextFieldDiscountActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTextFieldDiscountActionPerformed
-
-    private void JTextFieldPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextFieldPriceActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_JTextFieldPriceActionPerformed
-
-    private void JButtonQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonQueryActionPerformed
-        // TODO add your handling code here:
-        String tele = JTextFieldTel.getText();
-        customerDAO cdao = new customerDAO();
-        String roomNo = cdao.getRoomNo(tele);
-        JTextFieldRoom.setText(roomNo);
-
-        
-        String roomType = cdao.getRoomType(tele);
-        JTextFieldRoomType.setText(roomType);
-        
-        int no = Integer.parseInt(roomNo);
-        int p = cdao.getRoomPrice(no);
-        JTextFieldPrice.setText(String.valueOf(p));
-        
-
-        String roomType = cdao.getRoomType(tele);
-        JTextFieldRoomType.setText(roomType);
-
-        /*
-        String p=cdao.getRoomPrice(roomNo);
-        price.setText(p);
-         */
-        JTextFieldPrice.setText("200");//房间数据库宝诚还没给我，所以这里暂设为200
-
-    }//GEN-LAST:event_JButtonQueryActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosing
-    
-    private void exit() throws HeadlessException {
-        int opt = JOptionPane.showConfirmDialog(this, "确认关闭当前窗口？", "确认", JOptionPane.YES_NO_OPTION);
-
-        if (opt == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-    }
-
-    
-    private void ex() {
+        Check check = new Check();
         String customerName = JTextFieldCustomerName.getText();
         String customerID = JTextFieldCustomerID.getText();
-        String gender = null;
+        String gender = "";
         if (jRadioButton1.isSelected()) {
             gender = "男";
         } else if (jRadioButton2.isSelected()) {
@@ -384,20 +286,112 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                 int tenancy = Integer.parseInt(JTextFieldTenancy.getText());
                 float discount = Float.parseFloat(JTextFieldDiscount.getText());
                 int deposit = Integer.parseInt(JTextFieldDeposit.getText());
-                customer c = new customer();
-                c.setCustomerName(customerName);
-                c.setCustomerID(customerID);
-                c.setGender(gender);
-                c.setTelephoneNo(tele);
-                c.setTenancy(tenancy);
-                c.setDiscount(discount);
-                c.setDeposit(deposit);
-                customerDAO cdao = new customerDAO();
-                cdao.updateCustomer(c);
-                
+                boolean checkName = check.checkChineseAndEnglich(customerName);
+                if (checkName && customerName.length() < 21) {
+                    boolean checkCustomerID = check.checkId(customerID);
+                    if (checkCustomerID) {
+                        boolean checkDiscount = check.checkFloat(JTextFieldDiscount.getText());
+                        if (checkDiscount && (Float.parseFloat(JTextFieldDiscount.getText()) - 1 <= 0)) {
+                            boolean checkTenancy = check.checkNumber(JTextFieldTenancy.getText());
+                            if (checkTenancy && tenancy > 0) {
+                                boolean checkDeposit = check.checkNumber(JTextFieldDeposit.getText());
+                                if (checkDeposit) {
+                                    customer c = new customer();
+                                    c.setCustomerName(customerName);
+                                    c.setCustomerID(customerID);
+                                    c.setGender(gender);
+                                    c.setTelephoneNo(tele);
+                                    c.setTenancy(tenancy);
+                                    c.setDiscount(discount);
+                                    c.setDeposit(deposit);
+                                    customerDAO cdao = new customerDAO();
+                                    cdao.updateCustomer(c);
+                                    this.setVisible(false);
+                                    Main main = new Main();
+                                    main.setVisible(true);
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "押金只能由整数数字组成!");
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "租期大于0且只能由整数数字组成!");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "折扣只能由小于等于1的小数组成!");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "身份证号只能由17位数字和数字或xX组成!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "姓名只能由中文和英文组成且长度不超过20!");
+                }
             }
         }
-        
+
+        /*
+        if (customerName.equals("") || customerID.equals("") || gender.equals("") || tele.equals("") || JTextFieldTenancy.getText().equals("") || JTextFieldDiscount.getText().equals("") || JTextFieldDeposit.getText().equals("")) {
+                    JOptionPane.showConfirmDialog(this, "请将信息填写完整！", "确认", JOptionPane.YES_NO_OPTION);
+                } else {
+                    int tenancy = Integer.parseInt(JTextFieldTenancy.getText());
+                    float discount = Float.parseFloat(JTextFieldDiscount.getText());
+                    int deposit = Integer.parseInt(JTextFieldDeposit.getText());
+                    customer c = new customer();
+                    c.setCustomerName(customerName);
+                    c.setCustomerID(customerID);
+                    c.setGender(gender);
+                    c.setTelephoneNo(tele);
+                    c.setTenancy(tenancy);
+                    c.setDiscount(discount);
+                    c.setDeposit(deposit);
+                    customerDAO cdao = new customerDAO();
+                    cdao.updateCustomer(c);
+
+                }
+         */
+    }//GEN-LAST:event_jButtonConfirmActionPerformed
+
+    private void JTextFieldDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextFieldDiscountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTextFieldDiscountActionPerformed
+
+    private void JTextFieldPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextFieldPriceActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_JTextFieldPriceActionPerformed
+
+    private void JButtonQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonQueryActionPerformed
+        // TODO add your handling code here:
+        String tele = null;
+        String roomNo = null;
+        customerDAO cdao = new customerDAO();
+        if (JTextFieldTel.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "请输入手机号!");
+        } else {
+            tele = JTextFieldTel.getText();
+            Check check = new Check();
+            boolean checkTel = check.checkNumber(tele);
+            if (checkTel && tele.length() > 7 && tele.length() < 12) {
+                roomNo = cdao.getRoomNo(tele);
+                JTextFieldRoom.setText(roomNo);
+                int no = Integer.parseInt(roomNo);
+                int p = cdao.getRoomPrice(no);
+                JTextFieldPrice.setText(String.valueOf(p));
+            } else {
+                JOptionPane.showMessageDialog(null, "输入错误,手机号由8-11位数字组成");
+            }
+        }
+
+
+    }//GEN-LAST:event_JButtonQueryActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
+
+    private void exit() throws HeadlessException {
+        int opt = JOptionPane.showConfirmDialog(this, "确认关闭当前窗口？", "确认", JOptionPane.YES_NO_OPTION);
+        if (opt == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }
 
     /**
@@ -414,16 +408,24 @@ public class CustomerCheckIn extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CustomerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerCheckIn.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CustomerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerCheckIn.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CustomerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerCheckIn.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CustomerCheckIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerCheckIn.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -451,7 +453,6 @@ public class CustomerCheckIn extends javax.swing.JDialog {
     private javax.swing.JTextField JTextFieldDiscount;
     private javax.swing.JTextField JTextFieldPrice;
     private javax.swing.JTextField JTextFieldRoom;
-    private javax.swing.JTextField JTextFieldRoomType;
     private javax.swing.JTextField JTextFieldTel;
     private javax.swing.JTextField JTextFieldTenancy;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -459,11 +460,8 @@ public class CustomerCheckIn extends javax.swing.JDialog {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

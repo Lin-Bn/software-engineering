@@ -5,9 +5,19 @@
  */
 package gui;
 
+import CheckType.Check;
+import db.DBHelper;
+import db.customerDAO;
 import db.roomDAO;
+import entity.customer;
 import entity.room;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Random;
+import javax.management.Query;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author dell
@@ -17,8 +27,9 @@ public class Machine extends javax.swing.JFrame {
     /**
      * Creates new form Machine
      */
-    room room1=new room();
-    roomDAO ma=new roomDAO();
+    room room1 = new room();
+    roomDAO ma = new roomDAO();
+
     public Machine() {
         initComponents();
         this.setTitle("系统查询房间界面");
@@ -47,6 +58,10 @@ public class Machine extends javax.swing.JFrame {
         qua = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         size = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldTel = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextFieldDate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -81,6 +96,10 @@ public class Machine extends javax.swing.JFrame {
 
         jLabel4.setText("房间大小：");
 
+        jLabel5.setText("电话号码：");
+
+        jLabel6.setText("入住时间：");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,13 +118,17 @@ public class Machine extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(choose, 0, 120, Short.MAX_VALUE)
                     .addComponent(room)
                     .addComponent(money)
-                    .addComponent(size))
+                    .addComponent(size)
+                    .addComponent(jTextFieldTel)
+                    .addComponent(jTextFieldDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(qua)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -132,8 +155,17 @@ public class Machine extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(size, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -152,22 +184,100 @@ public class Machine extends javax.swing.JFrame {
     }//GEN-LAST:event_restartActionPerformed
 
     private void quaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quaryActionPerformed
-        this.setVisible(false);
-        Main main=new Main();
-        main.setVisible(true);
+
+        if (room.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "请先选择需要的房间类型");
+        } else {
+            int roomNo = Integer.valueOf(room.getText());
+            customer c = new customer();
+            customerDAO cdao = new customerDAO();
+            if (jTextFieldTel.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "请输入手机号!");
+            } else {
+                if (jTextFieldDate.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "请输入入住时间!");
+                } else {
+                    String tel = jTextFieldTel.getText();
+                    String date = jTextFieldDate.getText();
+                    Check check = new Check();
+                    boolean checkTel = check.checkNumber(tel);
+                    if (checkTel && tel.length() > 7 && tel.length() < 12) {
+                        boolean checkDate = check.checkDate(date);
+                        if (checkDate) {
+                            Connection conn = null;
+                            PreparedStatement pstmt = null;
+                            c.setRoomNo(roomNo);
+                            c.setTelephoneNo(tel);
+                            c.setStartDate(date);
+                            cdao.saveCustomer2(c);
+                            try {
+                                conn = DBHelper.getConnection();
+                                String sql = "UPDATE room SET room_free=FALSE WHERE room_number=?";
+                                pstmt = conn.prepareStatement(sql);
+                                pstmt.setInt(1, roomNo);
+                                pstmt.executeUpdate();
+                                pstmt.close();
+                                int opt = JOptionPane.showConfirmDialog(this, "确定要预订该房间？", "确认提示", JOptionPane.YES_NO_OPTION);
+                                if (opt != JOptionPane.YES_NO_OPTION) {
+                                    return;
+                                }
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "日期格式为yyyy.MM.dd!");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "输入错误,手机号由8-11位数字组成");
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_quaryActionPerformed
 
     private void quaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quaActionPerformed
-        String type=(String)choose.getSelectedItem();
-        //查询number
-        int number=ma.getRoomNumber1(type);
-        room.setText(Integer.toString(number));
-        //查询price
-        int price=ma.getRoomPrice1(number);
-        money.setText(Integer.toString(price)+"元");
-        //查询大小
-        int square=ma.getRoomSquare1(number);
-        size.setText(Integer.toString(square)+"平方米");
+//        String type=(String)choose.getSelectedItem();
+//        //查询number
+//        int number=ma.getRoomNumber1(type);
+//        room.setText(Integer.toString(number));
+//        //查询price
+//        int price=ma.getRoomPrice1(number);
+//        money.setText(Integer.toString(price)+"元");
+//        //查询大小
+//        int square=ma.getRoomSquare1(number);
+//        size.setText(Integer.toString(square)+"平方米");
+
+        String roomType = (String) choose.getSelectedItem();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.getConnection();
+            String sql = "SELECT room_number, room_price, room_square FROM room WHERE room_type=? AND room_free=TRUE";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, roomType);
+            rs = pstmt.executeQuery();
+            rs.last();
+            int rowCount = rs.getRow();
+            Random rand = new Random();
+            int row = rand.nextInt(rowCount) + 1;
+            System.out.println(row);
+            rs.beforeFirst();
+            if (rowCount == 0) {
+                JOptionPane.showMessageDialog(null, "该类型房间无空余!");
+            } else {
+                for (int i = 0; i < row; i++) {
+                    rs.next();
+                }
+                room.setText(Integer.toString(rs.getInt(1)));
+                money.setText(Integer.toString(rs.getInt(2)));
+                size.setText(Integer.toString(rs.getInt(3)));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_quaActionPerformed
 
     /**
@@ -212,8 +322,12 @@ public class Machine extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextField jTextFieldDate;
+    private javax.swing.JTextField jTextFieldTel;
     private javax.swing.JTextField money;
     private javax.swing.JButton qua;
     private javax.swing.JButton quary;

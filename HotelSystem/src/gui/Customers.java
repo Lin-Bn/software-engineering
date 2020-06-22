@@ -5,11 +5,14 @@
  */
 package gui;
 
+import CheckType.Check;
+import db.DBHelper;
 import db.customerDAO;
 import db.roomDAO;
 import entity.customer;
 import entity.room;
 import javax.swing.JOptionPane;
+import java.sql.*;
 
 /**
  *
@@ -25,7 +28,7 @@ public class Customers extends javax.swing.JFrame {
 
     public Customers() {
         initComponents();
-        this.setTitle("欢迎来到机选界面");
+        this.setTitle("欢迎来到自选界面");
         setLocationRelativeTo(null);
     }
 
@@ -205,24 +208,34 @@ public class Customers extends javax.swing.JFrame {
 
     private void quaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quaryActionPerformed
         String roomtype = (String) type.getSelectedItem();
-        int roomnumber = Integer.parseInt(number.getText());
-        if (roomnumber >= 101 && roomnumber <= 120 || roomnumber >= 201 && roomnumber <= 220 || roomnumber >= 301 && roomnumber <= 320 || roomnumber >= 401 && roomnumber <= 420) {
-            int roomprice = yd.getRoomPrice2(roomnumber, roomtype);
-            price.setText(Integer.toString(roomprice));
-            int roomsquare = yd.getRoomsquare2(roomnumber, roomtype);
-            square.setText(Integer.toString(roomsquare));
-            boolean roomfree = yd.getRoomFree2(roomnumber, roomtype);
-            if (roomfree) {
-                free.setText("可以预定");
+        if (!number.getText().equals("")) {
+            int roomnumber = Integer.parseInt(number.getText());
+            if (roomnumber >= 101 && roomnumber <= 120 || roomnumber >= 201 && roomnumber <= 220 || roomnumber >= 301 && roomnumber <= 320 || roomnumber >= 401 && roomnumber <= 420) {
+                roomDAO rDAO = new roomDAO();
+                String roomType = rDAO.queryRoomType(roomnumber);
+                if (roomType.equals(roomtype)) {
+                    int roomprice = yd.getRoomPrice2(roomnumber, roomtype);
+                    price.setText(Integer.toString(roomprice));
+                    int roomsquare = yd.getRoomsquare2(roomnumber, roomtype);
+                    square.setText(Integer.toString(roomsquare));
+                    boolean roomfree = yd.getRoomFree2(roomnumber, roomtype);
+                    if (roomfree) {
+                        free.setText("可以预定");
+                    } else {
+                        free.setText("不可预定");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "房间类型与房间号不符");
+                }
             } else {
-                free.setText("不可预定");
+                JOptionPane.showConfirmDialog(null, "您输入的信息有误，请仔细阅读下方的提示，重新输入");
+                number.setText("");
+                price.setText("");
+                square.setText("");
+                free.setText("");
             }
         } else {
-            JOptionPane.showConfirmDialog(null, "您输入的信息有误，请仔细阅读下方的提示，重新输入");
-            number.setText("");
-            price.setText("");
-            square.setText("");
-            free.setText("");
+            JOptionPane.showMessageDialog(this, "请输入房间号");
         }
     }//GEN-LAST:event_quaryActionPerformed
 
@@ -230,20 +243,60 @@ public class Customers extends javax.swing.JFrame {
         String name = jTextFieldName.getText();
         String tel = jTextFieldTele.getText();
         String start = jTextFieldStart.getText();
-        String roomtype = (String) type.getSelectedItem();
-        int roomNo = Integer.parseInt(number.getText());
-        customer c = new customer();
-        c.setCustomerName(name);
-        c.setTelephoneNo(tel);
-        c.setRoomType(roomtype);
-        c.setStartDate(start);
-        c.setRoomNo(roomNo);
-        customerDAO cdao = new customerDAO();
-        cdao.saveCustomer1(c);
-        int opt = JOptionPane.showConfirmDialog(this, "确定要预订该房间？", "确认提示", JOptionPane.YES_NO_OPTION);
-        if (opt != JOptionPane.YES_NO_OPTION) {
-            return;
+        int roomNo = Integer.valueOf(number.getText());
+        Check check = new Check();
+        roomDAO rDAO = new roomDAO();
+        boolean roomFree = rDAO.getRoomFree(roomNo);
+        if (roomFree) {
+            boolean checkName = check.checkChineseAndEnglich(name);
+            if (checkName && name.length() < 21) {
+                boolean checkTel = check.checkNumber(tel);
+                int telLength = tel.length();
+                if (checkTel && telLength > 7 && telLength < 12) {
+                    boolean checkDate = check.checkDate(start);
+                    if (checkDate) {
+                        customer c = new customer();
+                        c.setCustomerName(name);
+                        c.setTelephoneNo(tel);
+                        c.setStartDate(start);
+                        c.setRoomNo(roomNo);
+                        customerDAO cdao = new customerDAO();
+                        cdao.saveCustomer1(c);
+                        int opt = JOptionPane.showConfirmDialog(this, "确定要预订该房间？", "确认提示", JOptionPane.YES_NO_OPTION);
+                        if (opt != JOptionPane.YES_NO_OPTION) {
+                            return;
+                        }
+
+                        Connection conn = null;
+                        PreparedStatement pstmt = null;
+                        try {
+                            conn = DBHelper.getConnection();
+                            String sql = "UPDATE room SET room_free=FALSE WHERE room_number=?";
+                            pstmt = conn.prepareStatement(sql);
+                            pstmt.setInt(1, roomNo);
+                            pstmt.executeUpdate();
+                            pstmt.close();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                        this.setVisible(false);
+                        Main main = new Main();
+                        main.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "日期格式为yyyy.MM.dd!");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "手机号只能由8-11位数字组成!");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "姓名只能由中文和英文组成且长度不超过20!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "该房间已被预约");
         }
+
     }//GEN-LAST:event_chargeActionPerformed
 
     private void typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeActionPerformed

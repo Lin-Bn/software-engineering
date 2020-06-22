@@ -5,6 +5,7 @@
  */
 package gui;
 
+import CheckType.Check;
 import db.DBHelper;
 import db.customerDAO;
 import entity.customer;
@@ -13,8 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -57,9 +56,9 @@ public class AdministerSystem extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableSettlementInfo = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jTextPaymentField = new javax.swing.JTextField();
+        jButtonSettlementQuery = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jTextFieldPayment = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("管理员系统");
@@ -154,7 +153,7 @@ public class AdministerSystem extends javax.swing.JDialog {
                     .addComponent(jButton1)
                     .addComponent(jButtonDelete)
                     .addComponent(jButtonUpdate))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("顾客信息管理", jPanel1);
@@ -168,39 +167,28 @@ public class AdministerSystem extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true, true, true
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
         jScrollPane2.setViewportView(jTableSettlementInfo);
 
-        jButton2.setText("查询");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSettlementQuery.setText("查询");
+        jButtonSettlementQuery.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jTextPaymentField.setEditable(false);
-        jTextPaymentField.setText("0");
-        jTextPaymentField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextPaymentFieldActionPerformed(evt);
+                jButtonSettlementQueryActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("宋体", 0, 18)); // NOI18N
         jLabel2.setText("收入：");
+
+        jTextFieldPayment.setEditable(false);
+        jTextFieldPayment.setFont(new java.awt.Font("宋体", 0, 18)); // NOI18N
+        jTextFieldPayment.setText("0");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -212,24 +200,25 @@ public class AdministerSystem extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(78, 78, 78)
-                .addComponent(jLabel2)
+                .addComponent(jButtonSettlementQuery)
+                .addGap(83, 83, 83)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextPaymentField, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addComponent(jTextFieldPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jTextPaymentField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonSettlementQuery)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jTextFieldPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25))
         );
 
         jTabbedPane1.addTab("结算信息", jPanel2);
@@ -245,7 +234,7 @@ public class AdministerSystem extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
@@ -295,7 +284,7 @@ public class AdministerSystem extends javax.swing.JDialog {
         customer c = null;
         try {
             conn = DBHelper.getConnection();
-            String sql = "select * from customer";
+            String sql = "SELECT c.customerNo, c.customerName, c.customerId, c.gender, c.telephoneNo, r.room_type, c.startDate, c.tenancy, c.roomNo, c.discount, c.deposit FROM customer c, room r WHERE r.room_number=c.roomNo";
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             DefaultTableModel model = (DefaultTableModel) jTableCustomerInfo.getModel();
@@ -314,30 +303,38 @@ public class AdministerSystem extends javax.swing.JDialog {
     private void jButtonQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQueryActionPerformed
         // TODO add your handling code here:
         String tel = jTextFieldTele.getText();
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        customer c = null;
-        try {
-            conn = DBHelper.getConnection();
-            String sql = "select * from customer where telephoneNo=?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, tel);
-            rs = pstmt.executeQuery();
-            DefaultTableModel model = (DefaultTableModel) jTableCustomerInfo.getModel();
-            model.setRowCount(0);
-            for (int i = 1; rs.next(); i++) {
-                Object[] record = {rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9), rs.getFloat(10), rs.getInt(11)};
-                model.addRow(record);
+        Check numberCheck = new Check();
+        boolean isMatch = numberCheck.checkNumber(tel);
+        int telLength = tel.length();
+        if (isMatch && telLength > 7 && telLength < 12) {
+            Connection conn = null;
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+            customer c = null;
+            try {
+                conn = DBHelper.getConnection();
+                String sql = "SELECT c.customerNo, c.customerName, c.customerId, c.gender, c.telephoneNo, r.room_type, c.startDate, c.tenancy, c.roomNo, c.discount, c.deposit FROM customer c, room r WHERE r.room_number=c.roomNo AND telephoneNo=?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, tel);
+                rs = pstmt.executeQuery();
+                DefaultTableModel model = (DefaultTableModel) jTableCustomerInfo.getModel();
+                model.setRowCount(0);
+                for (int i = 1; rs.next(); i++) {
+                    Object[] record = {rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9), rs.getFloat(10), rs.getInt(11)};
+                    model.addRow(record);
+                }
+                rs.close();
+                pstmt.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-            rs.close();
-            pstmt.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } else {
+            JOptionPane.showMessageDialog(null, "输入错误,手机号由8-11位数字组成");
         }
+
     }//GEN-LAST:event_jButtonQueryActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonSettlementQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSettlementQueryActionPerformed
         // TODO add your handling code here:
         float count = 0;
         Connection conn = null;
@@ -345,27 +342,23 @@ public class AdministerSystem extends javax.swing.JDialog {
         ResultSet rs = null;
         try {
             conn = DBHelper.getConnection();
-            String sql = "SELECT s.settleNo, c.customerName, c.customerId, c.gender, c.telephoneNo, r.roomNo, r.roomType, c.startDate, c.tenancy, s.payable, s.payment FROM customer c, room r, settlement s WHERE s.customerNo = c.customerNo  AND r.roomNo = s.roomNo ";
+            String sql = "SELECT s.settleNo, c.customerName, c.customerId, c.gender, c.telephoneNo, r.room_number, r.room_type, c.startDate, c.tenancy, s.payable, s.payment FROM customer c, room r, settlement s WHERE s.customerNo = c.customerNo  AND r.room_number = s.roomNo";
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             DefaultTableModel model = (DefaultTableModel) jTableSettlementInfo.getModel();
             model.setRowCount(0);
             for (int i = 1; rs.next(); i++) {
                 count += rs.getFloat(10);
-                Object[] record = {rs.getString(1) , rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getFloat(10), rs.getFloat(11)};
+                Object[] record = {rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9), rs.getFloat(10), rs.getFloat(11)};
                 model.addRow(record);
             }
-            jTextPaymentField.setText(Float.toString(count));
+            jTextFieldPayment.setText(Float.toString(count));
             rs.close();
             pstmt.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextPaymentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPaymentFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextPaymentFieldActionPerformed
+    }//GEN-LAST:event_jButtonSettlementQueryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -398,7 +391,6 @@ public class AdministerSystem extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdministerSystem dialog = new AdministerSystem(new javax.swing.JFrame(), true);
@@ -415,9 +407,9 @@ public class AdministerSystem extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonQuery;
+    private javax.swing.JButton jButtonSettlementQuery;
     private javax.swing.JButton jButtonUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -428,7 +420,7 @@ public class AdministerSystem extends javax.swing.JDialog {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableCustomerInfo;
     private javax.swing.JTable jTableSettlementInfo;
+    private javax.swing.JTextField jTextFieldPayment;
     private javax.swing.JTextField jTextFieldTele;
-    private javax.swing.JTextField jTextPaymentField;
     // End of variables declaration//GEN-END:variables
 }

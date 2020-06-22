@@ -134,13 +134,17 @@ public class Main extends javax.swing.JFrame {
         c.setVisible(true);
     }//GEN-LAST:event_jButtonAdministratorActionPerformed
 
-
     private void jButtonRoomQueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRoomQueryActionPerformed
         // TODO add your handling code here:
         RoomQuery c = new RoomQuery();
         c.setVisible(true);
     }//GEN-LAST:event_jButtonRoomQueryActionPerformed
 
+    private void jButtonAdministrator1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdministrator1ActionPerformed
+        // TODO add your handling code here:
+        Settlement c = new Settlement(this, true);
+        c.setVisible(true);
+    }//GEN-LAST:event_jButtonAdministrator1ActionPerformed
 
     /**
      * @param args the command line arguments
