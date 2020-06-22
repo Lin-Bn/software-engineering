@@ -16,7 +16,6 @@ public class customer {
     private String customerID;
     private String gender;
     private String telephoneNo;
-    private String roomType;
     private String startDate;
     private int tenancy;
     private int roomNo;
@@ -45,10 +44,6 @@ public class customer {
 
     public String getTelephoneNo() {
         return telephoneNo;
-    }
-
-    public String getRoomType() {
-        return roomType;
     }
 
     public String getStartDate() {
@@ -91,10 +86,6 @@ public class customer {
         this.telephoneNo = telephoneNo;
     }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
-
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
@@ -117,6 +108,7 @@ public class customer {
 
     @Override
     public String toString() {
-        return "customer{" + "customerNo=" + customerNo + ", customerName=" + customerName + ", customerID=" + customerID + ", gender=" + gender + ", telephoneNo=" + telephoneNo + ", roomType=" + roomType + ", startDate=" + startDate + ", tenancy=" + tenancy + ", roomNo=" + roomNo + ", discount=" + discount + ", deposit=" + deposit + '}';
+        return "customer{" + "customerNo=" + customerNo + ", customerName=" + customerName + ", customerID=" + customerID + ", gender=" + gender + ", telephoneNo=" + telephoneNo + ", startDate=" + startDate + ", tenancy=" + tenancy + ", roomNo=" + roomNo + ", discount=" + discount + ", deposit=" + deposit + '}';
     }
+
 }

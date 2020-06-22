@@ -12,7 +12,7 @@ package entity;
 public class settlement {
     private int settleNo;
     private int customerNo;
-    private String roomNo;
+    private int roomNo;
     private Float payable;
     private Float payment;
     private String startDate;
@@ -34,11 +34,11 @@ public class settlement {
         this.customerNo = customerNo;
     }
 
-    public String getRoomNo() {
+    public int getRoomNo() {
         return roomNo;
     }
 
-    public void setRoomNo(String roomNo) {
+    public void setRoomNo(int roomNo) {
         this.roomNo = roomNo;
     }
 
