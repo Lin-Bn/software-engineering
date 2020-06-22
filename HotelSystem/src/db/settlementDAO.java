@@ -21,7 +21,7 @@ public class settlementDAO {
             String sql = "insert into settlement(customerNo, roomNo, payable, payment, startDate, tenancy)" + " values (?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, s.getCustomerNo());
-            ps.setString(2, s.getRoomNo());
+            ps.setInt(2, s.getRoomNo());
             ps.setFloat(3, s.getPayable());
             ps.setFloat(4, s.getPayment());
             ps.setString(5, s.getStartDate());

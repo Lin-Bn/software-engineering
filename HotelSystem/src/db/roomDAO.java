@@ -5,14 +5,11 @@
  */
 package db;
 
-
 import db.DBHelper;
-
 import entity.room;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -66,7 +63,6 @@ public class roomDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         return c;
     }
 
@@ -128,7 +124,6 @@ public class roomDAO {
         }
         return true;
     }
-
 
     //查询1/7 已知type求number√
     public int getRoomNumber1(String room_type) {
@@ -303,5 +298,37 @@ public class roomDAO {
         }
         return r;
     }
+    
+    public boolean changeRoomFree(int roomNo){
+        try {
+            Connection conn = DBHelper.getConnection();
+            String sql = "update room set room_Free=0 where room_number=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, roomNo);
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public String queryRoomType(int roomNo){
+        try {
+            Connection conn = DBHelper.getConnection();
+            String sql = "select room_type from room where room_number=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, roomNo);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            String RoomType = rs.getString(1);
+            rs.close();;
+            ps.close();
+            return RoomType;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
-
